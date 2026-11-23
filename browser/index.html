@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="color-scheme" content="dark" />
+    <meta name="description" content="ARTEX Browser — an autonomous, LLM-driven security-testing agent that runs entirely in your browser. Paste an API key and start." />
+    <title>ARTEX Browser</title>
+    <link rel="icon" type="image/svg+xml" href="logo.svg" />
+    <link rel="apple-touch-icon" href="logo.svg" />
+    <style>
+      /* Inline boot screen: visible before React loads, avoids a white flash. */
+      html { background: #0b0812; }
+      .boot { position: fixed; inset: 0; display: grid; place-items: center; color: #a49bc0; font: 13px system-ui, sans-serif; }
+    </style>
+  </head>
+  <body>
+    <div id="root"><div class="boot">Loading ARTEX…</div></div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

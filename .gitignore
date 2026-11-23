@@ -16,6 +16,11 @@ web/tsconfig.tsbuildinfo
 web/next-env.d.ts
 *.local
 
+# browser edition (browser/)
+browser/node_modules/
+browser/dist/
+browser/.smoke/
+
 # development tools
 .playwright-mcp/
 .playwright-cli/

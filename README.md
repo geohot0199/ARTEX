@@ -15,7 +15,7 @@ and every finding stays bound to the assets and HTTP traffic that prove it.
 [![CI](https://github.com/BaaRai/ARTEX/actions/workflows/ci.yml/badge.svg?branch=main)](https://github.com/BaaRai/ARTEX/actions/workflows/ci.yml)
 [![Go](https://img.shields.io/github/go-mod/go-version/BaaRai/ARTEX?color=6b34db)](go.mod)
 
-[Quick start](#quick-start) · [Screenshots](#screenshots) · [How it works](#how-it-works) · [Install](#installation) · [Configuration](#configuration) · [Security](SECURITY.md)
+[Quick start](#quick-start) · [Browser edition](#browser-edition-no-install) · [Screenshots](#screenshots) · [How it works](#how-it-works) · [Install](#installation) · [Configuration](#configuration) · [Security](SECURITY.md)
 
 </div>
 
@@ -37,6 +37,30 @@ justify it, and every autonomous action passes through scope rules, approval gat
   token and turn budgets, a target noise governor, and prompt-injection framing on tool output.
 - **Self-hosted and model-agnostic.** One Go binary with the Next.js UI embedded, PostgreSQL,
   your own Anthropic/OpenAI-compatible endpoint, or a local Ollama.
+
+---
+
+## Browser edition (no install)
+
+Want to try the loop before installing anything? **[`browser/`](browser/README.md)** is a standalone,
+fully static edition that runs the agent **entirely in a browser tab** — no Go binary, no PostgreSQL,
+no Docker, no setup token. Paste an LLM API key and start a task.
+
+```bash
+cd browser
+npm install
+npm run dev        # http://localhost:5173
+```
+
+`npm run build` produces a `dist/` folder that can be hosted on any static host. The browser edition
+keeps the same product shape (tasks, goals, scope rules, findings with evidence, hypotheses, tool log,
+turn/request budgets) and carries its own scope gate, approval gate and budgets. Its ceiling is the
+browser itself: it does HTTP-level testing via `fetch` plus DNS-over-HTTPS, and cannot run local
+tools such as nmap, sqlmap or a MITM proxy — for those, use the full install below.
+
+Note that some providers do not permit browser (CORS) calls. OpenRouter, Groq, Gemini, Mistral,
+Together and a local Ollama work directly; OpenAI and Anthropic need the small optional proxy
+included in `browser/proxy/`. See [browser/README.md](browser/README.md) for the details.
 
 ---
 

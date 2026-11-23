@@ -152,6 +152,33 @@ jobs:
       - run: npm run test:bash
       - run: npm run build:static
 
+  # browser edition: the dependency-free, no-install build that runs the agent loop
+  # entirely in the page. Same gates a user would run locally, via npm run verify.
+  browser:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: browser
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+          cache: npm
+          cache-dependency-path: browser/package-lock.json
+      - run: npm ci
+      - run: npm run typecheck
+      - run: npm test
+      - run: npm run build
+      # Renders every screen server-side: catches a first-paint crash without a browser.
+      - run: npm run smoke
+      - name: the built bundle really is standalone
+        # No Go binary, no server: the output must be static files only, and must not
+        # reference localhost or the ARTEX API.
+        run: |
+          test -f dist/index.html
+          ! grep -rl "localhost:8787\|127.0.0.1:8787" dist
+
   python:
     runs-on: ubuntu-latest
     steps:
